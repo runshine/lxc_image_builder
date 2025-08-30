@@ -1,0 +1,64 @@
+# This is a basic workflow to help you get started with Actions
+
+name: build_debian_lxc
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: lxc/distrobuilder
+          submodules: recursive
+          
+      - name: Run Install Package
+        run: apt update && apt install apt-transport-https qemu qemu-user-static binfmt-support debootstrap
+
+      - name: Set up Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.25
+          
+      - name: Build distrobuilder
+        run: |
+          export PATH=$PATH:$(go env GOPATH)/bin # temporary fix. See https://github.com/actions/setup-go/issues/14
+          go mod
+          make
+      
+      - name: Build armel_trixie
+        run: |
+          mkdir armel_trixie
+          cd armel_trixie
+          ${HOME}/go/bin/distrobuilder build-lxc ../debian.yaml -o image.release=trixie -o image.architecture=armel -o image.variant=default
+     
+      - name: Build armhf_trixie
+        run: |
+          mkdir armhf_trixie
+          cd armhf_trixie
+          ${HOME}/go/bin/distrobuilder build-lxc ../debian.yaml -o image.release=trixie -o image.architecture=armhf -o image.variant=default
+       
+      - name: Build aarch64_trixie
+        run: |
+          mkdir aarch64_trixie
+          cd aarch64_trixie
+          ${HOME}/go/bin/distrobuilder build-lxc ../debian.yaml -o image.release=trixie -o image.architecture=aarch64 -o image.variant=default
+
+      - name: Upload binary to artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lxc_trixie_image
+          path: ${{ github.workspace }}/*_trixie/*
+          
