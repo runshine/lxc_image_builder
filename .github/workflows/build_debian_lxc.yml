@@ -35,7 +35,7 @@ jobs:
       - name: Build distrobuilder
         run: |
           export PATH=$PATH:$(go env GOPATH)/bin # temporary fix. See https://github.com/actions/setup-go/issues/14
-          go mod
+          go mod tidy
           make
       
       - name: Build armel_trixie
