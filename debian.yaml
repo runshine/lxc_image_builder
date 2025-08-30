@@ -1114,6 +1114,7 @@ packages:
     - make
     - libkrb5-dev
     - libssl-dev
+    - htop
     action: install
 
   - packages:
