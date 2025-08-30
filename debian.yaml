@@ -1112,6 +1112,8 @@ packages:
     - flex
     - bison
     - make
+    - libkrb5-dev
+    - libssl-dev
     action: install
 
   - packages:
