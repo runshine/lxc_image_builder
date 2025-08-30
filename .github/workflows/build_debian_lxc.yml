@@ -40,21 +40,21 @@ jobs:
       
       - name: Build armel_trixie
         run: |
-          mkdir armel_trixie
-          cd armel_trixie
-          sudo ${HOME}/go/bin/distrobuilder build-lxc ../debian.yaml -o image.release=trixie -o image.architecture=armel -o image.variant=default
+          mkdir ${{ github.workspace }}/armel_trixie
+          cd ${{ github.workspace }}/armel_trixie
+          sudo ${HOME}/go/bin/distrobuilder build-lxc ${{ github.workspace }}/debian.yaml -o image.release=trixie -o image.architecture=armel -o image.variant=default
      
       - name: Build armhf_trixie
         run: |
-          mkdir armhf_trixie
-          cd armhf_trixie
-          sudo ${HOME}/go/bin/distrobuilder build-lxc ../debian.yaml -o image.release=trixie -o image.architecture=armhf -o image.variant=default
+          mkdir ${{ github.workspace }}/armhf_trixie
+          cd ${{ github.workspace }}/armhf_trixie
+          sudo ${HOME}/go/bin/distrobuilder build-lxc ${{ github.workspace }}/debian.yaml -o image.release=trixie -o image.architecture=armhf -o image.variant=default
        
       - name: Build aarch64_trixie
         run: |
-          mkdir aarch64_trixie
-          cd aarch64_trixie
-          sudo ${HOME}/go/bin/distrobuilder build-lxc ../debian.yaml -o image.release=trixie -o image.architecture=aarch64 -o image.variant=default
+          mkdir ${{ github.workspace }}/aarch64_trixie
+          cd ${{ github.workspace }}/aarch64_trixie
+          sudo ${HOME}/go/bin/distrobuilder build-lxc ${{ github.workspace }}/debian.yaml -o image.release=trixie -o image.architecture=aarch64 -o image.variant=default
 
       - name: Upload binary to artifacts
         uses: actions/upload-artifact@v4
