@@ -25,7 +25,7 @@ jobs:
           submodules: recursive
           
       - name: Run Install Package
-        run: apt update && apt install apt-transport-https qemu qemu-user-static binfmt-support debootstrap
+        run: sudo apt update && sudo apt install apt-transport-https qemu qemu-user-static binfmt-support debootstrap
 
       - name: Set up Go
         uses: actions/setup-go@v1
