@@ -1099,9 +1099,13 @@ packages:
     - netbase
     - net-tools
     - openssh-client
+    - openssh-server
+    - openssh-sftp-server
     - procps
     - sudo
     - vim
+    - netplan.io
+    - networkd-dispatcher
     action: install
 
   - packages:
