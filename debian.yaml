@@ -1106,6 +1106,12 @@ packages:
     - vim
     - netplan.io
     - networkd-dispatcher
+    - binutils
+    - build-essential
+    - cmake
+    - flex
+    - bison
+    - make
     action: install
 
   - packages:
